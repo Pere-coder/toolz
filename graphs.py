@@ -62,6 +62,8 @@ By combining a user-friendly interface with powerful functionality, **Graphy** b
 
 The goal is for **Graphy** to become an essential part of students' learning tools, empowering them to explore mathematical concepts in a way that is both interactive and educational.
 """)
+
+st.write('Normal Graph')
 numberx_string = st.text_input("Enter a list of X values (comma-separated):", value="1,2,3,4,5")
 numbery_string = st.text_input("Enter a list of Y values (comma-separated):", value="3,5,8,9,10")
 
@@ -145,7 +147,7 @@ def parse_input(number_string):
           return None
      
 
-if st.button("Plot"):
+if st.button("Plot normal graph"):
     xpoints = parse_input(numberx_string)
     ypoints = parse_input(numbery_string)
     if default_x and default_y:
@@ -163,6 +165,54 @@ if st.button("Plot"):
 
 
 
+st.write("Bar graph")
+numberx_bar_string = st.text_input("Enter a list of X values (comma-separated):", value="1,2,3,4,5", key='x_bar')
+numbery_bar_string = st.text_input("Enter a list of Y values (comma-separated):", value="3,5,8,9,10", key="y_bar")
+
+def plot_bar_graph(numberx_bar_string, numbery_bar_string):
+    # Parsing the inputs
+    x_bar = parse_input(numberx_bar_string)
+    y_bar = parse_input(numbery_bar_string)
+    
+    # Check if X and Y values have the same length
+    if len(x_bar) != len(y_bar):
+         st.error("X and Y values must have the same length.")
+         return
+    
+    # Define custom colors for the bars
+    bar_colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']
+    
+    # Set up the figure and axis
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Create the bar graph with color and additional styles
+    bars = ax.bar(x_bar, y_bar, color=bar_colors[:len(x_bar)])
+    
+    # Add title and labels
+    ax.set_title('Bar Graph Example', fontsize=16, fontweight='bold')
+    ax.set_xlabel('X Axis Label', fontsize=12)
+    ax.set_ylabel('Y Axis Label', fontsize=12)
+    
+    # Display the value of each bar on top
+    for bar in bars:
+        yval = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, str(round(yval, 2)),
+                ha='center', va='bottom', fontsize=10, color='black', fontweight='bold')
+    
+    # Add gridlines for better readability
+    ax.grid(True, axis='y', linestyle='--', alpha=0.7)
+    
+    # Display the graph
+    st.pyplot(fig)
+
+if st.button("Plot bar graph"):
+    try:
+        plot_bar_graph(numberx_bar_string, numbery_bar_string)
+    except Exception as e:
+        st.write(f"An Error occured {e}")
+
+
+
 
 text = st.text_input("Have any complaints or suggestion?", key="complaints", placeholder="Type here...")
 sender_email = "gpere800@gmail.com"
@@ -174,3 +224,6 @@ if st.button("Send Message"):
         sendmail(sender_email, receiver_email, text, password)
     except Exception as e:
         st.write(f"Error {e}")
+
+
+
