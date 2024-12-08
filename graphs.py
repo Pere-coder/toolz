@@ -213,7 +213,58 @@ if st.button("Plot bar graph"):
 
 
 
+st.markdown("### <u style='color: coral;'>Scatter Plot</u>", unsafe_allow_html=True)
 
+# Input fields for X and Y values
+numberx_scatter_string = st.text_input("Enter a list of X values (comma-separated):", value="1,2,3,4,5", key='x_scatter')
+numbery_scatter_string = st.text_input("Enter a list of Y values (comma-separated):", value="3,5,8,9,10", key="y_scatter")
+
+# Function to plot scatter graph with customizations
+def plot_scatter_graph(numberx_scatter_string, numbery_scatter_string):
+    # Parsing the inputs
+    x_scatter = parse_input(numberx_scatter_string)
+    y_scatter = parse_input(numbery_scatter_string)
+    
+    # Check if X and Y values have the same length
+    if len(x_scatter) != len(y_scatter):
+         st.error("X and Y values must have the same length.")
+         return
+    
+    # Define custom colors for the points
+    scatter_colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']
+    
+    # Set up the figure and axis
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Create the scatter plot with color and additional styles
+    scatter = ax.scatter(x_scatter, y_scatter, c=scatter_colors[:len(x_scatter)], s=100, edgecolors='black', alpha=0.7)
+    
+    # Add title and labels
+    ax.set_title('Scatter Plot Example', fontsize=16, fontweight='bold')
+    ax.set_xlabel('X Axis Label', fontsize=12)
+    ax.set_ylabel('Y Axis Label', fontsize=12)
+    
+    # Display the value of each point next to it
+    for i in range(len(x_scatter)):
+        ax.text(x_scatter[i] + 0.1, y_scatter[i] + 0.1, f'({x_scatter[i]}, {y_scatter[i]})', 
+                fontsize=10, color='black', fontweight='bold')
+    
+    # Add gridlines for better readability
+    ax.grid(True, linestyle='--', alpha=0.7)
+    
+    # Add a colorbar to show the color mapping (optional, depending on how you set up the colors)
+    # plt.colorbar(scatter, ax=ax, label='Color Scale')
+
+    # Display the graph
+    st.pyplot(fig)
+
+# Button to trigger scatter plot
+if st.button("Plot scatter graph"):
+    try:
+        plot_scatter_graph(numberx_scatter_string, numbery_scatter_string)
+    except Exception as e:
+        st.write(f"An Error occurred: {e}")
+        
 text = st.text_input("Have any complaints or suggestion?", key="complaints", placeholder="Type here...")
 sender_email = "gpere800@gmail.com"
 receiver_email = "gpere800@gmail.com"
