@@ -63,7 +63,7 @@ By combining a user-friendly interface with powerful functionality, **Graphy** b
 The goal is for **Graphy** to become an essential part of students' learning tools, empowering them to explore mathematical concepts in a way that is both interactive and educational.
 """)
 
-st.markdown("### <u>Normal graph</u>", unsafe_allow_html=True)
+st.markdown("### <u style='color: coral;'>Normal graph</u>", unsafe_allow_html=True)
 numberx_string = st.text_input("Enter a list of X values (comma-separated):", value="1,2,3,4,5")
 numbery_string = st.text_input("Enter a list of Y values (comma-separated):", value="3,5,8,9,10")
 
@@ -165,7 +165,7 @@ if st.button("Plot normal graph"):
 
 
 
-st.markdown("### <u>Bar graph</u>", unsafe_allow_html=True)
+st.markdown("### <u style='color: coral;'>Bar graph</u>", unsafe_allow_html=True)
 numberx_bar_string = st.text_input("Enter a list of X values (comma-separated):", value="1,2,3,4,5", key='x_bar')
 numbery_bar_string = st.text_input("Enter a list of Y values (comma-separated):", value="3,5,8,9,10", key="y_bar")
 
