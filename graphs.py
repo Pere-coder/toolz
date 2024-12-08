@@ -29,21 +29,39 @@ def sendmail(sender_email, receiver_email, text, password):
     finally:
          server.quit()
 
-st.write("# GRAPH PLOTS")
-text = st.text_input("Have any complaints or suggestion?", key="complaints", placeholder="Type here...")
-sender_email = "gpere800@gmail.com"
-receiver_email = "gpere800@gmail.com"
-password ="fyya kccu tzsf fwgm"
+st.write("# GRAPHY")
+st.write("""
+# Graphy: An Interactive Graph Plotting Tool for Students
 
-if st.button("Send Message"):
-    try:
-        sendmail(sender_email, receiver_email, text, password)
-    except Exception as e:
-        st.write(f"Error {e}")
+**Graphy** is an innovative tool designed to help students seamlessly plot and visualize mathematical graphs in real-time, enhancing their learning experience and deepening their understanding of concepts. With its intuitive interface, **Graphy** empowers users to quickly input their data points and immediately see the resulting graph, making it ideal for interactive learning in classrooms or for self-paced study.
 
-     
+## Key Features of Graphy
 
+- **Real-Time Plotting**:  
+  As students input data points, the graph updates dynamically, allowing them to instantly observe the effects of their changes. This helps with immediate feedback and makes learning more interactive.
 
+- **Default Axis Customization**:  
+  Students can define the boundaries of the graph with adjustable default axes, providing flexibility to create graphs that suit various mathematical problems.
+
+- **Slope and Intercept Calculation**:  
+  With just a few clicks, students can easily calculate the slope and intercept of their data points and see the best-fit line, reinforcing their understanding of linear regression.
+
+- **Interactive Annotations**:  
+  The tool includes the ability to highlight key features of the graph, such as the change in X and Y values (`Δx`, `Δy`), and display the corresponding coordinates, aiding students in their analysis.
+
+- **Grid and Labels**:  
+  The graphing interface is designed with clear axis labels and grid lines to help students interpret their graphs more easily.
+
+## How Graphy Enhances Learning
+
+The primary goal of **Graphy** is to make graph plotting an effortless task, allowing students to focus more on interpreting the results rather than spending time on the mechanics of graph creation. Whether plotting basic linear graphs, exploring advanced data trends, or visualizing mathematical functions, **Graphy** enables users to intuitively see how changes in input data affect the graph.
+
+By combining a user-friendly interface with powerful functionality, **Graphy** bridges the gap between theory and application, making graph plotting not only easy but also an engaging and effective way to learn. This tool helps students not only visualize but also better understand the relationships between variables, making it an invaluable resource in subjects like algebra, calculus, statistics, and data science.
+
+## Conclusion
+
+The goal is for **Graphy** to become an essential part of students' learning tools, empowering them to explore mathematical concepts in a way that is both interactive and educational.
+""")
 numberx_string = st.text_input("Enter a list of X values (comma-separated):", value="1,2,3,4,5")
 numbery_string = st.text_input("Enter a list of Y values (comma-separated):", value="3,5,8,9,10")
 
@@ -143,3 +161,16 @@ if st.button("Plot"):
         plotgraph(xpoints, ypoints, default_x, default_y)
 
 
+
+
+
+text = st.text_input("Have any complaints or suggestion?", key="complaints", placeholder="Type here...")
+sender_email = "gpere800@gmail.com"
+receiver_email = "gpere800@gmail.com"
+password ="fyya kccu tzsf fwgm"
+
+if st.button("Send Message"):
+    try:
+        sendmail(sender_email, receiver_email, text, password)
+    except Exception as e:
+        st.write(f"Error {e}")
