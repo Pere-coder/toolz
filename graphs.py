@@ -4,14 +4,12 @@ import numpy as np
 import pandas as pd
  
 st.write("# GRAPH PLOTS")
-numberx_string = st.text_input("Enter a list of numbers separated by commas:", key="x_data")
-numbery_string = st.text_input("Enter a list of numbers separated by commas:", key="y_data")
+st.write("Have anu complaint or suggestion, Contact us")
+numberx_string = st.text_input("Enter a list of X values (comma-separated):", value="1,2,3,4,5")
+numbery_string = st.text_input("Enter a list of Y values (comma-separated):", value="3,5,8,9,10")
 
-
-def plotgraph(numberx_string, numbery_string):
+def plotgraph(xvalues, yvalues):
         try:
-            xvalues = [float(num.strip()) for num in numberx_string.split(",")]
-            yvalues = [float(num.strip()) for num in numbery_string.split(",")]
             xpoints = np.array(xvalues)
             ypoints = np.array(yvalues)
             coefficients = np.polyfit(xpoints, ypoints, 1)
@@ -40,9 +38,27 @@ def plotgraph(numberx_string, numbery_string):
         except ValueError:
               st.error("Please enter a correct list of numbers.")
 
-if st.button('Plot'):
-    try:
-        plotgraph(numberx_string, numbery_string)
-    except ValueError:
-        st.error("Please enter a valid list of numbers.")
+
+def parse_input(number_string):
+     try:
+        if len(number_string) < 5:
+             st.error('List should be greater than 4 numbers')
+        return np.array([float(num.strip()) for num in number_string.split(",")])
+     except ValueError:
+          return None
+     
+
+if st.button("Plot"):
+    xpoints = parse_input(numberx_string)
+    ypoints = parse_input(numbery_string)
+
+    if xpoints is None or ypoints is None:
+        st.error("Invalid input. Please enter valid comma-separated numbers.")
+    elif len(xpoints) != len(ypoints):
+        st.error("X and Y values must have the same length.")
+    elif len(xpoints) < 2:
+        st.error("At least two points are required for plotting.")
+    else:
+        plotgraph(xpoints, ypoints)
+
 
