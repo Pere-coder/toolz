@@ -249,6 +249,15 @@ if st.button("Plot scatter graph"):
     except Exception as e:
         st.write(f"An Error occurred: {e}")
 
+
+st.markdown("""
+    <style>
+    .stTextInput>div>div>input[placeholder="Type here..."] {
+        background-color: #d4edda;  /* Light green background */
+        color: green;  /* Green text color */
+    }
+    </style>
+""", unsafe_allow_html=True)
 text = st.text_input("Have any complaints or suggestion?", key="complaints", placeholder="Type here...")
 sender_email = "gpere800@gmail.com"
 receiver_email = "gpere800@gmail.com"
