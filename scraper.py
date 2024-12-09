@@ -1,4 +1,3 @@
-import re
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
@@ -30,22 +29,14 @@ def scrape_jumia(param):
 
     # Extract product details
     for element in product_elements:
-        description = element.get_text()
+        description = element.get_text().strip()
         link = element.get('href')
         image = element.find('img')['data-src'] if element.find('img') else None
 
-        # Extract percentage discount from the description
-        discount_match = re.search(r'(\d+%)$', description)
-        discount = discount_match.group(1) if discount_match else None
-        description = re.sub(r'(\d+%)$', '', description).strip()  # Remove the percentage from description
-
-        # Construct full URL for the product link
         if link and not link.startswith('http'):
             link = f"https://www.jumia.com.ng{link}"
-
         products.append({
             'description': description,
-            'discount': discount,
             'link': link,
             'image': image
         })
@@ -53,12 +44,39 @@ def scrape_jumia(param):
     return products
 
 # Streamlit app
-st.title("Jumia Product Scraper (ScraperAPI)")
-
-# Input field for product search
+st.markdown(
+    "<p style='color:coral;font-size:50px;font-family: verdana;'>Jumia Product Scraper</p>", 
+    unsafe_allow_html=True
+)
+st.markdown(
+    "<p style='color:red;'>Note: Due to other people's requests being made, it could lead to slower data fetching!</p>", 
+    unsafe_allow_html=True
+)
 param = st.text_input("Enter the product to search:", "nokia")
 
 # Scrape and display results on button click
+st.markdown(
+    """
+    <style>
+    .stButton > button {
+        background-color: black;
+        color: coral;
+        font-size: 20px;
+        font-family: Verdana, sans-serif;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .stButton > button:hover {
+        background-color: coral;
+        color: black;
+    }
+    </style>
+    """, 
+    unsafe_allow_html=True
+)
 if st.button("Scrape Products"):
     st.write(f"Scraping products for: **{param}**...")
 
@@ -67,9 +85,7 @@ if st.button("Scrape Products"):
     if products:
         # Display the products
         for product in products:
-            st.text(f"Description: {product['description']}")
-            if product['discount']:
-                st.text(f"Discount: {product['discount']}")
+            st.text(product['description'])
             if product['image']:
                 st.image(product['image'], width=150)
             st.markdown(f"[View Product]({product['link']})")
