@@ -31,6 +31,4 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 watchdog==6.0.0
 streamlit
-selenium
-chromedriver-autoinstaller
-playwright
+beautifulsoup4==4.11.1
