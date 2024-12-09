@@ -110,7 +110,7 @@ if st.button("Scrape Products"):
             st.text(product['description'])
             if product['image']:
                 st.markdown(f"<img src='{product['image']}' class='rounded-img' width='250'>", unsafe_allow_html=True)
-                st.markdown(f"<span style='margin-top: 10px;'></span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='margin-top:20px;'></span>", unsafe_allow_html=True)
             st.markdown(f"<a href='{product['link']}' class='view-product-btn' target='_blank'>View Product</a>", unsafe_allow_html=True)
     else:
         st.warning("No products found.")
