@@ -1,28 +1,33 @@
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
-def scrape_jumia(param):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-    }
-    url = f"https://example.com/"
-    response = requests.get(url, headers=headers)
 
+# ScraperAPI Key
+SCRAPERAPI_KEY = "473441c00cfe587c257f687c5e604ca9"
+
+# Function to scrape Jumia
+def scrape_jumia(param):
+    # ScraperAPI URL with parameters
+    scraperapi_url = f"http://api.scraperapi.com/?api_key={SCRAPERAPI_KEY}&url=https://www.jumia.com.ng/catalog/?q={param}"
+    
+    response = requests.get(scraperapi_url)
+
+    # Check if the response is valid
     if response.status_code == 403:
-        print("Access Denied! The server rejected your request.")
+        st.error("Access Denied! ScraperAPI request failed.")
+        return []
+    elif response.status_code != 200:
+        st.error(f"Failed to retrieve data. Status Code: {response.status_code}")
         return []
 
     # Parse the page using BeautifulSoup
     soup = BeautifulSoup(response.text, 'html.parser')
     products = []
 
+    # Select product elements
     product_elements = soup.select('a.core')
 
+    # Extract product details
     for element in product_elements:
         description = element.get_text().strip()
         link = element.get('href')
@@ -37,7 +42,7 @@ def scrape_jumia(param):
     return products
 
 # Streamlit app
-st.title("Jumia Product Scraper")
+st.title("Jumia Product Scraper (ScraperAPI)")
 
 # Input field for product search
 param = st.text_input("Enter the product to search:", "nokia")
