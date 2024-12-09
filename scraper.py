@@ -5,31 +5,24 @@ import time
 
 # Scraping function using Playwright
 def scrape_jumia(param):
-    products = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # Ensure headless mode
+        browser = p.firefox.launch(headless=True)  # Use Firefox instead of Chromium
         page = browser.new_page()
         page.goto(f"https://www.jumia.com.ng/catalog/?q={param}")
-
-        # Wait for page content to load
-        page.wait_for_selector('a.core')
-
-        # Extract product details
+        
+        products = []
         product_elements = page.query_selector_all('a.core')
         for element in product_elements:
-            description = element.inner_text()
+            description = element.text_content()
             link = element.get_attribute('href')
-            image = element.query_selector('img').get_attribute('data-src')
-
+            image = element.query_selector('img').get_attribute('src')
             products.append({
-                'description': description,
+                'description': description.strip() if description else None,
                 'link': link,
-                'image': image
+                'image': image,
             })
-
         browser.close()
-
-    return products
+        return products
 
 # Streamlit app
 st.title("Jumia Product Scraper")
