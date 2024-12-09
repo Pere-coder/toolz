@@ -1,3 +1,4 @@
+import re
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
@@ -33,8 +34,18 @@ def scrape_jumia(param):
         link = element.get('href')
         image = element.find('img')['data-src'] if element.find('img') else None
 
+        # Extract percentage discount from the description
+        discount_match = re.search(r'(\d+%)$', description)
+        discount = discount_match.group(1) if discount_match else None
+        description = re.sub(r'(\d+%)$', '', description).strip()  # Remove the percentage from description
+
+        # Construct full URL for the product link
+        if link and not link.startswith('http'):
+            link = f"https://www.jumia.com.ng{link}"
+
         products.append({
             'description': description,
+            'discount': discount,
             'link': link,
             'image': image
         })
@@ -56,7 +67,9 @@ if st.button("Scrape Products"):
     if products:
         # Display the products
         for product in products:
-            st.text(product['description'])
+            st.text(f"Description: {product['description']}")
+            if product['discount']:
+                st.text(f"Discount: {product['discount']}")
             if product['image']:
                 st.image(product['image'], width=150)
             st.markdown(f"[View Product]({product['link']})")
