@@ -82,7 +82,7 @@ st.markdown(
         color: white;
         padding: 10px 20px;
         font-size: 18px;
-        border-radius: 5px;
+        border-radius: 10px;
         text-decoration: none;
         transition: background-color 0.3s;
     }
