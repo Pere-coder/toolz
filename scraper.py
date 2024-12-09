@@ -76,6 +76,20 @@ st.markdown(
     .rounded-img {
         border-radius: 15px;
     }
+    .view-product-btn {
+        display: inline-block;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+    .view-product-btn:hover {
+        background-color: coral;
+        color: black;
+    }
     </style>
     """, 
     unsafe_allow_html=True
@@ -91,6 +105,6 @@ if st.button("Scrape Products"):
             st.text(product['description'])
             if product['image']:
                 st.markdown(f"<img src='{product['image']}' class='rounded-img' width='250'>", unsafe_allow_html=True)
-            st.markdown(f"[View Product]({product['link']})")
+            st.markdown(f"<a href='{product['link']}' class='view-product-btn' target='_blank'>View Product</a>", unsafe_allow_html=True)
     else:
         st.warning("No products found.")
