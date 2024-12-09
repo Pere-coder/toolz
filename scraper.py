@@ -73,6 +73,9 @@ st.markdown(
         background-color: coral;
         color: black;
     }
+    .rounded-img {
+        border-radius: 15px;
+    }
     </style>
     """, 
     unsafe_allow_html=True
@@ -87,7 +90,7 @@ if st.button("Scrape Products"):
         for product in products:
             st.text(product['description'])
             if product['image']:
-                st.image(product['image'], width=150)
+                st.markdown(f"<img src='{product['image']}' class='rounded-img' width='150'>", unsafe_allow_html=True)
             st.markdown(f"[View Product]({product['link']})")
     else:
         st.warning("No products found.")
