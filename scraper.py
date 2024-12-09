@@ -10,7 +10,7 @@ def scrape_jumia(param):
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
     }
-    url = f"https://www.jumia.com.ng/catalog/?q={param}"
+    url = f"https://example.com/"
     response = requests.get(url, headers=headers)
 
     if response.status_code == 403:
