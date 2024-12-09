@@ -90,6 +90,10 @@ st.markdown(
         background-color: coral;
         color: black;
     }
+    .separator {
+    border-top: 2px solid coral;
+    margin: 10px 0;
+}
     </style>
     """, 
     unsafe_allow_html=True
@@ -102,6 +106,7 @@ if st.button("Scrape Products"):
     if products:
         # Display the products
         for product in products:
+            st.markdown('<hr class="separator">', unsafe_allow_html=True)
             st.text(product['description'])
             if product['image']:
                 st.markdown(f"<img src='{product['image']}' class='rounded-img' width='250'>", unsafe_allow_html=True)
