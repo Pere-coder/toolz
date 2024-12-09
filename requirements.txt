@@ -33,3 +33,4 @@ watchdog==6.0.0
 streamlit
 selenium
 chromedriver-autoinstaller
+playwright
