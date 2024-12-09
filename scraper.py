@@ -29,7 +29,7 @@ def scrape_jumia(param):
 
     # Extract product details
     for element in product_elements:
-        description = element.get_text().strip()
+        description = element.get_text()
         link = element.get('href')
         image = element.find('img')['data-src'] if element.find('img') else None
 
@@ -56,7 +56,7 @@ if st.button("Scrape Products"):
     if products:
         # Display the products
         for product in products:
-            st.subheader(product['description'])
+            st.text(product['description'])
             if product['image']:
                 st.image(product['image'], width=150)
             st.markdown(f"[View Product]({product['link']})")
