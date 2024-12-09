@@ -49,7 +49,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.markdown(
-    "<p style='color:red;'>Note: Due to other people's requests being made, it could lead to slower data fetching!</p>", 
+    "<p style='color:green;'>Note: Due to other people's requests being made, it could lead to slower data fetching!</p>", 
     unsafe_allow_html=True
 )
 param = st.text_input("Enter the product to search:", "nokia")
