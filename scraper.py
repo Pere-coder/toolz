@@ -1,53 +1,34 @@
+import streamlit as st
 import requests
 from bs4 import BeautifulSoup
-import re
-import streamlit as st
 
-# Scraping function using BeautifulSoup
 def scrape_jumia(param):
-    url = f"https://www.jumia.com.ng/catalog/?q={param}"  # Construct URL
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    url = f"https://www.jumia.com.ng/catalog/?q={param}"
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 403:
+        st.error("Access Denied! The server rejected your request.")
+        return []
+
+    # Parse the page using BeautifulSoup
+    soup = BeautifulSoup(response.text, 'html.parser')
     products = []
 
-    try:
-        # Send HTTP GET request to the URL
-        response = requests.get(url)
-        response.raise_for_status()  # Check for request errors (e.g., 404, 500)
+    product_elements = soup.select('a.core')
 
-        # Parse HTML using BeautifulSoup
-        soup = BeautifulSoup(response.text, 'html.parser')
+    for element in product_elements:
+        description = element.get_text().strip()
+        link = element.get('href')
+        image = element.find('img')['data-src'] if element.find('img') else None
 
-        # Locate product elements (You may need to inspect the page to get the correct CSS selector)
-        product_elements = soup.select('a.core')
-
-        # Extract product details
-        for element in product_elements:
-            product_info = {}
-
-            # Extract and clean text
-            text = element.get_text()
-            parts = re.split(r'\(\d+\)', text)  # Remove any numbers inside parentheses (e.g., price counts)
-            parts = [part.strip() for part in parts if part.strip()]
-            combined_text = " ".join(parts)
-
-            # Extract link
-            link = element.get('href')
-
-            # Extract image
-            image_element = element.find('img')
-            if image_element:
-                image_src = image_element.get('data-src') or image_element.get('src')
-            else:
-                image_src = None
-
-            # Add to products list
-            products.append({
-                'description': combined_text,
-                'link': link,
-                'image': image_src
-            })
-
-    except Exception as e:
-        st.error(f"An error occurred during scraping: {e}")
+        products.append({
+            'description': description,
+            'link': link,
+            'image': image
+        })
 
     return products
 
@@ -60,6 +41,7 @@ param = st.text_input("Enter the product to search:", "nokia")
 # Scrape and display results on button click
 if st.button("Scrape Products"):
     st.write(f"Scraping products for: **{param}**...")
+
     products = scrape_jumia(param)
 
     if products:
@@ -71,4 +53,3 @@ if st.button("Scrape Products"):
             st.markdown(f"[View Product]({product['link']})")
     else:
         st.warning("No products found.")
-
