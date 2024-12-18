@@ -261,7 +261,7 @@ st.markdown("""
 text = st.text_input("Have any complaints or suggestion?", key="complaints", placeholder="Type here...")
 sender_email = "gpere800@gmail.com"
 receiver_email = "gpere800@gmail.com"
-password ="fyya kccu tzsf fwgm"
+password =""
 
 if st.button("Send Message"):
     try:
