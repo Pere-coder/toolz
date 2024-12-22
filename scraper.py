@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 # ScraperAPI Key
-SCRAPERAPI_KEY  = os.environ.get("SCRAPERAPI_KEY ")
+SCRAPERAPI_KEY  = os.environ.get("SCRAPERAPI_KEY")
 
 # Function to scrape Jumia
 def scrape_jumia(param):
