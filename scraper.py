@@ -1,9 +1,11 @@
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 # ScraperAPI Key
-SCRAPERAPI_KEY = "473441c00cfe587c257f687c5e604ca9"
+SCRAPERAPI_KEY  = os.environ.get("SCRAPERAPI_KEY ")
 
 # Function to scrape Jumia
 def scrape_jumia(param):

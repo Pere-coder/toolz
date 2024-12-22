@@ -5,9 +5,11 @@ import pandas as pd
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
-
-
+password = os.environ.get("password")
 def sendmail(sender_email, receiver_email, text, password):
     message = MIMEMultipart()
     message['From'] = sender_email
@@ -261,7 +263,7 @@ st.markdown("""
 text = st.text_input("Have any complaints or suggestion?", key="complaints", placeholder="Type here...")
 sender_email = "gpere800@gmail.com"
 receiver_email = "gpere800@gmail.com"
-password ="fyya kccu tzsf fwgm"
+password = password
 
 if st.button("Send Message"):
     try:
